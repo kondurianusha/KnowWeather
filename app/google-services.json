@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "475537205604",
+    "firebase_url": "https://knowweather-bd6f3.firebaseio.com",
+    "project_id": "knowweather-bd6f3",
+    "storage_bucket": "knowweather-bd6f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475537205604:android:10993b8cb62c3257",
+        "android_client_info": {
+          "package_name": "com.example.tusharacharya.knowweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475537205604-scimetmg9ha15da9t4e7pk9m2moapskn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC25nfdv75f36xGEoeV9N68nQpOcYioi6A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
