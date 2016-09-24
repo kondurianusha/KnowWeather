@@ -41,28 +41,24 @@ public class MeraFirebaseManager {
 
     }
 
-    public Observable<Boolean> addCityToFirebase(final WeatherResponse weatherResponse) {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+    public Observable<WeatherResponse> addCityToFirebase(final WeatherResponse weatherResponse) {
+        return Observable.create(new Observable.OnSubscribe<WeatherResponse>() {
             @Override
-            public void call(final Subscriber<? super Boolean> subscriber) {
+            public void call(final Subscriber<? super WeatherResponse> subscriber) {
                 FirebaseWeather firebaseWeather = new FirebaseWeather(weatherResponse);
-                firebaseDatabase.getReference().child(androidId).child(String.valueOf(firebaseWeather.getLocationId())).setValue(firebaseWeather, new DatabaseReference.CompletionListener() {
+                firebaseDatabase.getReference().child(androidId).child(String.valueOf(firebaseWeather.getLocationId())).setValue(weatherResponse, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                        if (databaseError == null) {
-                            Timber.d("Data Add to Firebase");
-                            subscriber.onNext(true);
+                        if(databaseError == null){
+                            Timber.d("Data added to Firebase");
+                            subscriber.onNext(weatherResponse);
                             subscriber.onCompleted();
-
-                        } else {
+                        }else {
                             Timber.e(databaseError.toException());
-                            subscriber.onNext(false);
-                            subscriber.onCompleted();
+                            subscriber.onError(databaseError.toException());
                         }
-
                     }
                 });
-
             }
         });
 

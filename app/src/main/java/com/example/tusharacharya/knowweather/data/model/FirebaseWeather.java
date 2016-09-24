@@ -12,6 +12,9 @@ public class FirebaseWeather {
     double temp;
     double pressure;
 
+    public FirebaseWeather() {
+    }
+
     public FirebaseWeather(long locationId, String name, double lon, double lat, double temp, double pressure) {
         this.locationId = locationId;
         this.name = name;

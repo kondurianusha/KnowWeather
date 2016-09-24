@@ -14,4 +14,7 @@ public interface WeatherApi {
 
     @GET("/data/2.5/weather")
     Observable<WeatherResponse> getWeatherForCity(@Query("APPID") String appId, @Query("q") String cityName);
+
+    @GET("/data/2.5/weather")
+    Observable<WeatherResponse> getWeatherForCityWithId(@Query("APPID") String appId, @Query("id") long cityId);
 }

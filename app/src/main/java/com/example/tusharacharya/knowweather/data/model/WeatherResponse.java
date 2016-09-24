@@ -15,6 +15,30 @@ public class WeatherResponse {
     String name;
     long id;
 
+    public Coordinate getCoord() {
+        return coord;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public MainData getMain() {
+        return main;
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "WeatherResponse{" +

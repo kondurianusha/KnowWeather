@@ -10,6 +10,26 @@ public class MainData {
     double pressure;
     double humidity;
 
+    public double getTemp() {
+        return temp;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public double getTempMax() {
+        return tempMax;
+    }
+
     @SerializedName("temp_min")
     double tempMin;
 

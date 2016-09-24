@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.tusharacharya.knowweather.Constants;
 import com.example.tusharacharya.knowweather.R;
 import com.example.tusharacharya.knowweather.data.DataUtils;
 import com.example.tusharacharya.knowweather.data.MeraFirebaseManager;
+import com.example.tusharacharya.knowweather.data.WeatherApi;
 import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
+import com.example.tusharacharya.knowweather.data.model.Weather;
 import com.example.tusharacharya.knowweather.data.model.WeatherResponse;
 import com.example.tusharacharya.knowweather.databinding.ActivityHomeBinding;
 import com.example.tusharacharya.knowweather.utils.KWUtils;
@@ -30,16 +31,20 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static com.example.tusharacharya.knowweather.Constants.OW_APPID;
+
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding binding;
     MeraFirebaseManager firebaseManager;
+    WeatherApi weatherApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         firebaseManager = MeraFirebaseManager.getInstance(this);
+        weatherApi = DataUtils.provideWeatherApi();
 
         binding.toolbarHome.setTitle("K W App");
         setSupportActionBar(binding.toolbarHome);
@@ -92,41 +97,52 @@ public class HomeActivity extends AppCompatActivity {
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText editText = new EditText(HomeActivity.this);
-                Timber.d("Add button Clicked !!");
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setTitle("Add city name")
-                        .setView(editText)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                addCity(editText.getText().toString());
-                            }
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .show();
+                onAddCityClicked();
             }
         });
 
     }
 
+    private void onAddCityClicked() {
+        final EditText editText = new EditText(HomeActivity.this);
+        Timber.d("Add button Clicked !!");
+        new AlertDialog.Builder(HomeActivity.this)
+                .setTitle("Add city name")
+                .setView(editText)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String cityName = editText.getText().toString();
+                        Observable<WeatherResponse> observable = weatherApi.getWeatherForCity(OW_APPID, cityName);
+                        fetchWeatherForCityAndSaveOnFirebase(observable);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
     private void handleUiWithData(List<FirebaseWeather> firebaseWeathers) {
-        if(firebaseWeathers.isEmpty()){
-            
+        if (firebaseWeathers.isEmpty()) {
+            binding.dataContainer.setVisibility(View.GONE);
+        } else {
+            binding.noDataText.setVisibility(View.GONE);
+            Observable<WeatherResponse> observable = weatherApi.getWeatherForCityWithId(OW_APPID, firebaseWeathers.get(0).getLocationId());
+            fetchWeatherForCityAndSaveOnFirebase(observable);
+
         }
     }
 
-    private void addCity(String cityName) {
-        DataUtils.provideWeatherApi().getWeatherForCity(Constants.OPEN_WEATHER_APPID, cityName)
-                .flatMap(new Func1<WeatherResponse, Observable<Boolean>>() {
+    private void fetchWeatherForCityAndSaveOnFirebase(Observable<WeatherResponse> observable) {
+        observable
+                .flatMap(new Func1<WeatherResponse, Observable<WeatherResponse>>() {
                     @Override
-                    public Observable<Boolean> call(WeatherResponse weatherResponse) {
+                    public Observable<WeatherResponse> call(WeatherResponse weatherResponse) {
                         return firebaseManager.addCityToFirebase(weatherResponse);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Boolean>() {
+                .subscribe(new Subscriber<WeatherResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -138,12 +154,11 @@ public class HomeActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(Boolean success) {
-                        if (success) {
-                            Toast.makeText(HomeActivity.this, "Added to Firebase Successfully", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(HomeActivity.this, "Error in adding to Firebase", Toast.LENGTH_LONG).show();
-                        }
+                    public void onNext(WeatherResponse weatherResponse) {
+                        binding.toolbarHome.setTitle(weatherResponse.getName());
+                        binding.tempText.setText(String.format("Temperature - %s", weatherResponse.getMain().getTemp()));
+                        binding.pressureText.setText(String.format("Pressure - %s", weatherResponse.getMain().getPressure()));
+                        binding.humidityText.setText(String.format("Humidity - %s", weatherResponse.getMain().getHumidity()));
                     }
                 });
     }
