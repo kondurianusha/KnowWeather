@@ -2,6 +2,7 @@ package com.example.tusharacharya.knowweather.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +38,7 @@ import static com.example.tusharacharya.knowweather.Constants.OW_APPID;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final int REQUEST_MY_CITIES = 4657;
     ActivityHomeBinding binding;
     MeraFirebaseManager firebaseManager;
     WeatherApi weatherApi;
@@ -73,8 +75,19 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_my_cities) {
             // TODO: 24/09/16 implement click
+            Intent intent = new Intent(this, MyCitiesActivity.class);
+            startActivityForResult(intent, REQUEST_MY_CITIES);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_MY_CITIES) {
+
+        }
     }
 
     @Override
