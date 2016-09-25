@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.adapter;
+package com.tramsun.knowweather.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
+import com.tramsun.knowweather.data.model.FirebaseWeather;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather;
+package com.tramsun.knowweather;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

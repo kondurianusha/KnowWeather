@@ -1,7 +1,7 @@
-package com.example.tusharacharya.knowweather.data;
+package com.tramsun.knowweather.data;
 
 
-import com.example.tusharacharya.knowweather.data.model.WeatherResponse;
+import com.tramsun.knowweather.data.model.WeatherResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

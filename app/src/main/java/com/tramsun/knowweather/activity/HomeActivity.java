@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.activity;
+package com.tramsun.knowweather.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,14 +15,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.tusharacharya.knowweather.R;
-import com.example.tusharacharya.knowweather.data.DataUtils;
-import com.example.tusharacharya.knowweather.data.MeraFirebaseManager;
-import com.example.tusharacharya.knowweather.data.WeatherApi;
-import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
-import com.example.tusharacharya.knowweather.data.model.WeatherResponse;
-import com.example.tusharacharya.knowweather.databinding.ActivityHomeBinding;
-import com.example.tusharacharya.knowweather.utils.KWUtils;
+import com.tramsun.knowweather.R;
+import com.tramsun.knowweather.data.DataUtils;
+import com.tramsun.knowweather.data.MeraFirebaseManager;
+import com.tramsun.knowweather.data.WeatherApi;
+import com.tramsun.knowweather.data.model.FirebaseWeather;
+import com.tramsun.knowweather.data.model.WeatherResponse;
+import com.tramsun.knowweather.databinding.ActivityHomeBinding;
+import com.tramsun.knowweather.utils.KWUtils;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-import static com.example.tusharacharya.knowweather.Constants.OW_APPID;
+import static com.tramsun.knowweather.Constants.OW_APPID;
 
 public class HomeActivity extends AppCompatActivity {
 

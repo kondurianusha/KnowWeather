@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.adapter;
+package com.tramsun.knowweather.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

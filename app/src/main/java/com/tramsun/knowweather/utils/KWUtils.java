@@ -1,10 +1,9 @@
-package com.example.tusharacharya.knowweather.utils;
+package com.tramsun.knowweather.utils;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.widget.Switch;
 
-import com.example.tusharacharya.knowweather.R;
+import com.tramsun.knowweather.R;
 
 /**
  * Created by tusharacharya on 24/09/16.

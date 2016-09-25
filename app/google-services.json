@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475537205604:android:10993b8cb62c3257",
+        "mobilesdk_app_id": "1:475537205604:android:e36120111956c6f0",
         "android_client_info": {
-          "package_name": "com.example.tusharacharya.knowweather"
+          "package_name": "com.tramsun.knowweather"
         }
       },
       "oauth_client": [

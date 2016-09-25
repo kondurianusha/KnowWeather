@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.data.model;
+package com.tramsun.knowweather.data.model;
 
 /**
  * Created by tusharacharya on 24/09/16.

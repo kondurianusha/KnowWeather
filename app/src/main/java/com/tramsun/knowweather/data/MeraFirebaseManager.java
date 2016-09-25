@@ -1,15 +1,15 @@
-package com.example.tusharacharya.knowweather.data;
+package com.tramsun.knowweather.data;
 
 import android.content.Context;
 
-import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
-import com.example.tusharacharya.knowweather.data.model.WeatherResponse;
-import com.example.tusharacharya.knowweather.utils.KWUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tramsun.knowweather.data.model.FirebaseWeather;
+import com.tramsun.knowweather.data.model.WeatherResponse;
+import com.tramsun.knowweather.utils.KWUtils;
 
 import java.util.ArrayList;
 import java.util.List;

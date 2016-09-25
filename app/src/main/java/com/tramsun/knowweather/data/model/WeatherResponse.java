@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.data.model;
+package com.tramsun.knowweather.data.model;
 
 
 import java.util.List;

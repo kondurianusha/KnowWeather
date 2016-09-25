@@ -1,4 +1,4 @@
-package com.example.tusharacharya.knowweather.activity;
+package com.tramsun.knowweather.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -12,11 +12,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.tusharacharya.knowweather.R;
-import com.example.tusharacharya.knowweather.adapter.MyCitiesListAdapter;
-import com.example.tusharacharya.knowweather.data.MeraFirebaseManager;
-import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
-import com.example.tusharacharya.knowweather.databinding.ActivityMyCitiesBinding;
+import com.tramsun.knowweather.R;
+import com.tramsun.knowweather.adapter.MyCitiesListAdapter;
+import com.tramsun.knowweather.data.MeraFirebaseManager;
+import com.tramsun.knowweather.data.model.FirebaseWeather;
+import com.tramsun.knowweather.databinding.ActivityMyCitiesBinding;
 
 import java.util.List;
 

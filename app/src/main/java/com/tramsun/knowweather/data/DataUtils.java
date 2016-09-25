@@ -1,17 +1,11 @@
-package com.example.tusharacharya.knowweather.data;
+package com.tramsun.knowweather.data;
 
-import com.example.tusharacharya.knowweather.data.model.Weather;
-
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class DataUtils {
 
     private static OkHttpClient okHttpClient;
