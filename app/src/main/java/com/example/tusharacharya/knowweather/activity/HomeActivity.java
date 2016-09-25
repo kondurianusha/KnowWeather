@@ -47,18 +47,21 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        firebaseManager = MeraFirebaseManager.getInstance(this);
-        weatherApi = DataUtils.provideWeatherApi();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Please wait..");
+
+        initModules();
 
         binding.toolbarHome.setTitle("K W App");
         setSupportActionBar(binding.toolbarHome);
 
         Timber.d("Android ID is %s", KWUtils.getAndroidID(this));
+    }
 
-
+    private void initModules() {
+        firebaseManager = MeraFirebaseManager.getInstance(this);
+        weatherApi = DataUtils.provideWeatherApi();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait..");
     }
 
     @Override

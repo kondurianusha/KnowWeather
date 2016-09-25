@@ -1,5 +1,6 @@
 package com.example.tusharacharya.knowweather.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -28,12 +29,13 @@ public class MyCitiesActivity extends AppCompatActivity {
     private ActivityMyCitiesBinding binding;
     private MeraFirebaseManager firebaseManager;
     private MyCitiesListAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_cities);
-        firebaseManager = MeraFirebaseManager.getInstance(this);
+        initModules();
 
         binding.myCitiesToolbar.setTitle("My Cities");
         setSupportActionBar(binding.myCitiesToolbar);
@@ -60,6 +62,13 @@ public class MyCitiesActivity extends AppCompatActivity {
         });
     }
 
+    private void initModules() {
+        firebaseManager = MeraFirebaseManager.getInstance(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait..");
+    }
+
     private void onAddCityClicked() {
         final EditText editText = new EditText(this);
         Timber.d("Add button Clicked !!");
@@ -84,6 +93,7 @@ public class MyCitiesActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
+        progressDialog.show();
         firebaseManager.getCities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,12 +105,13 @@ public class MyCitiesActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void onNext(List<FirebaseWeather> firebaseWeathers) {
                         adapter.setData(firebaseWeathers);
+                        progressDialog.dismiss();
                     }
                 });
     }
