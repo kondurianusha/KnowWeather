@@ -1,8 +1,5 @@
 package com.tramsun.knowweather.data.model;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class Coordinate {
     double lon;
     double lat;

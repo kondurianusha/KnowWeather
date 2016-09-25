@@ -11,9 +11,6 @@ import com.tramsun.knowweather.data.model.FirebaseWeather;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by tusharacharya on 25/09/16.
- */
 public class MyCitiesListAdapter extends RecyclerView.Adapter<CityViewHolder> {
 
     private final LayoutInflater inflater;

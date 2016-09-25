@@ -2,9 +2,6 @@ package com.tramsun.knowweather.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class MainData {
     double temp;
     double pressure;

@@ -5,9 +5,6 @@ import android.provider.Settings;
 
 import com.tramsun.knowweather.R;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class KWUtils {
 
     public static String getAndroidID(Context context){

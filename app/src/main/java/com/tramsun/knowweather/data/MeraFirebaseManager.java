@@ -18,9 +18,6 @@ import rx.Observable;
 import rx.Subscriber;
 import timber.log.Timber;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class MeraFirebaseManager {
 
     private static MeraFirebaseManager meraFirebaseManager;

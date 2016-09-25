@@ -3,9 +3,6 @@ package com.tramsun.knowweather.data.model;
 
 import java.util.List;
 
-/**
- * Created by tusharacharya on 24/09/16.
- */
 public class WeatherResponse {
     Coordinate coord;
     List<Weather> weather;
