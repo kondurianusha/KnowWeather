@@ -1,5 +1,6 @@
 package com.example.tusharacharya.knowweather.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.tusharacharya.knowweather.R;
 import com.example.tusharacharya.knowweather.data.DataUtils;
 import com.example.tusharacharya.knowweather.data.MeraFirebaseManager;
@@ -38,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     ActivityHomeBinding binding;
     MeraFirebaseManager firebaseManager;
     WeatherApi weatherApi;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class HomeActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         firebaseManager = MeraFirebaseManager.getInstance(this);
         weatherApi = DataUtils.provideWeatherApi();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait..");
 
         binding.toolbarHome.setTitle("K W App");
         setSupportActionBar(binding.toolbarHome);
@@ -75,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
+        progressDialog.show();
+
         firebaseManager.getCities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showError(e);
                     }
 
                     @Override
@@ -94,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                         handleUiWithData(firebaseWeathers);
                     }
                 });
+
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +110,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showError(Throwable e) {
+        Timber.e(e);
+        progressDialog.dismiss();
+        Toast.makeText(HomeActivity.this, "An error occurred", Toast.LENGTH_LONG).show();
     }
 
     private void onAddCityClicked() {
@@ -112,6 +127,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.show();
                         String cityName = editText.getText().toString();
                         Observable<WeatherResponse> observable = weatherApi.getWeatherForCity(OW_APPID, cityName);
                         fetchWeatherForCityAndSaveOnFirebase(observable);
@@ -127,6 +143,7 @@ public class HomeActivity extends AppCompatActivity {
             fetchWeatherForCityAndSaveOnFirebase(observable);
         } else {
             showNoData(true);
+            progressDialog.dismiss();
         }
     }
 
@@ -159,7 +176,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showError(e);
                     }
 
                     @Override
@@ -167,10 +184,15 @@ public class HomeActivity extends AppCompatActivity {
                         binding.toolbarHome.setTitle(weatherResponse.getName());
                         binding.tempText.setText(String.format("Temperature - %s", weatherResponse.getMain().getTemp()));
                         binding.pressureText.setText(String.format("Pressure - %s", weatherResponse.getMain().getPressure()));
+                        binding.pressureText.setText(String.format("Pressure - %s", weatherResponse.getMain().getPressure()));
                         binding.humidityText.setText(String.format("Humidity - %s", weatherResponse.getMain().getHumidity()));
-                        binding.weatherImage.setImageResource(KWUtils.getImageForWeatherCode(weatherResponse.getWeather().get(0).getIcon()));
+
+                        Glide.with(HomeActivity.this)
+                                .load(KWUtils.getImageForWeatherCode(weatherResponse.getWeather().get(0).getIcon()))
+                                .into(binding.weatherImage);
 
                         showNoData(false);
+                        progressDialog.dismiss();
                     }
                 });
     }
