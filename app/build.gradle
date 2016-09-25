@@ -64,6 +64,7 @@ dependencies {
     //RXJava
     compile 'io.reactivex:rxjava:1.2.0'
 
+    compile 'com.google.android.gms:play-services-maps:9.6.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

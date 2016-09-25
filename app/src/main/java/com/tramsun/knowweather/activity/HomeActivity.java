@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.tramsun.knowweather.MapsActivity;
 import com.tramsun.knowweather.R;
 import com.tramsun.knowweather.data.DataUtils;
 import com.tramsun.knowweather.data.MeraFirebaseManager;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     MeraFirebaseManager firebaseManager;
     WeatherApi weatherApi;
     ProgressDialog progressDialog;
+    private WeatherResponse weatherResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +78,14 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_my_cities) {
-            // TODO: 24/09/16 implement click
             Intent intent = new Intent(this, MyCitiesActivity.class);
             startActivityForResult(intent, REQUEST_MY_CITIES);
+        } else if (item.getItemId() == R.id.action_map) {
+            Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra("Longitude", weatherResponse.getCoord().getLon());
+            intent.putExtra("Latitude", weatherResponse.getCoord().getLat());
+            intent.putExtra("CityName", weatherResponse.getName());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -189,6 +196,7 @@ public class HomeActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<WeatherResponse>() {
+
                     @Override
                     public void onCompleted() {
 
@@ -201,6 +209,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(WeatherResponse weatherResponse) {
+                        HomeActivity.this.weatherResponse = weatherResponse;
                         binding.toolbarHome.setTitle(weatherResponse.getName());
                         binding.tempText.setText(String.format("Temperature - %s", weatherResponse.getMain().getTemp()));
                         binding.pressureText.setText(String.format("Pressure - %s", weatherResponse.getMain().getPressure()));

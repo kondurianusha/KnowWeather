@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="My Cities"
+    <item
+        android:title="@string/map"
         app:showAsAction="always"
-        android:id="@+id/action_my_cities"
+        android:id="@+id/action_map"
         />
+
+    <item
+        android:title="@string/my_cities"
+        app:showAsAction="always"
+        android:id="@+id/action_my_cities" />
 </menu>
