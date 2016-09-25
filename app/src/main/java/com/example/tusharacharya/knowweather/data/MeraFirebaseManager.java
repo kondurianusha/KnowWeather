@@ -46,7 +46,7 @@ public class MeraFirebaseManager {
             @Override
             public void call(final Subscriber<? super WeatherResponse> subscriber) {
                 FirebaseWeather firebaseWeather = new FirebaseWeather(weatherResponse);
-                firebaseDatabase.getReference().child(androidId).child(String.valueOf(firebaseWeather.getLocationId())).setValue(weatherResponse, new DatabaseReference.CompletionListener() {
+                firebaseDatabase.getReference().child(androidId).child(String.valueOf(firebaseWeather.getLocationId())).setValue(firebaseWeather, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                         if(databaseError == null){

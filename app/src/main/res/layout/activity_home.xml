@@ -33,7 +33,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/temp_text"
@@ -68,7 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Click + to add a city"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:visibility="gone" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_button"

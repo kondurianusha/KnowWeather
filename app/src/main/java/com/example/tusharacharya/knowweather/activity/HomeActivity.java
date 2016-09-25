@@ -122,13 +122,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void handleUiWithData(List<FirebaseWeather> firebaseWeathers) {
-        if (firebaseWeathers.isEmpty()) {
-            binding.dataContainer.setVisibility(View.GONE);
-        } else {
-            binding.noDataText.setVisibility(View.GONE);
+        if (!firebaseWeathers.isEmpty()) {
             Observable<WeatherResponse> observable = weatherApi.getWeatherForCityWithId(OW_APPID, firebaseWeathers.get(0).getLocationId());
             fetchWeatherForCityAndSaveOnFirebase(observable);
+        } else {
+            showNoData(true);
+        }
+    }
 
+
+    private void showNoData(boolean showNoDataText) {
+        if (showNoDataText) {
+            binding.dataContainer.setVisibility(View.GONE);
+            binding.noDataText.setVisibility(View.VISIBLE);
+        } else {
+            binding.dataContainer.setVisibility(View.VISIBLE);
+            binding.noDataText.setVisibility(View.GONE);
         }
     }
 
@@ -159,6 +168,9 @@ public class HomeActivity extends AppCompatActivity {
                         binding.tempText.setText(String.format("Temperature - %s", weatherResponse.getMain().getTemp()));
                         binding.pressureText.setText(String.format("Pressure - %s", weatherResponse.getMain().getPressure()));
                         binding.humidityText.setText(String.format("Humidity - %s", weatherResponse.getMain().getHumidity()));
+                        binding.weatherImage.setImageResource(KWUtils.getImageForWeatherCode(weatherResponse.getWeather().get(0).getIcon()));
+
+                        showNoData(false);
                     }
                 });
     }
