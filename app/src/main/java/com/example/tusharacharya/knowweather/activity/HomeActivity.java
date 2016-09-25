@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +20,6 @@ import com.example.tusharacharya.knowweather.data.DataUtils;
 import com.example.tusharacharya.knowweather.data.MeraFirebaseManager;
 import com.example.tusharacharya.knowweather.data.WeatherApi;
 import com.example.tusharacharya.knowweather.data.model.FirebaseWeather;
-import com.example.tusharacharya.knowweather.data.model.Weather;
 import com.example.tusharacharya.knowweather.data.model.WeatherResponse;
 import com.example.tusharacharya.knowweather.databinding.ActivityHomeBinding;
 import com.example.tusharacharya.knowweather.utils.KWUtils;
@@ -86,7 +85,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_MY_CITIES) {
-
+            if (resultCode == RESULT_OK) {
+                progressDialog.show();
+                String cityName = data.getStringExtra("CityName");
+                Observable<WeatherResponse> observable = weatherApi.getWeatherForCity(OW_APPID, cityName);
+                fetchWeatherForCityAndSaveOnFirebase(observable);
+            }
         }
     }
 

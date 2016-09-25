@@ -18,8 +18,14 @@ public class MyCitiesListAdapter extends RecyclerView.Adapter<CityViewHolder> {
 
     private final LayoutInflater inflater;
     private final ArrayList<FirebaseWeather> data;
+    private final OnCityClicked listener;
 
-    public MyCitiesListAdapter(Context context) {
+    public interface OnCityClicked {
+        void onCityClicked(FirebaseWeather firebaseWeather);
+    }
+
+    public MyCitiesListAdapter(Context context, OnCityClicked listener) {
+        this.listener = listener;
         inflater = LayoutInflater.from(context);
         data = new ArrayList<>();
     }
@@ -32,7 +38,15 @@ public class MyCitiesListAdapter extends RecyclerView.Adapter<CityViewHolder> {
 
     @Override
     public void onBindViewHolder(CityViewHolder holder, int position) {
-        holder.textView.setText(data.get(position).getName());
+        final FirebaseWeather city = data.get(position);
+        holder.textView.setText(city.getName());
+
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCityClicked(city);
+            }
+        });
     }
 
     @Override
