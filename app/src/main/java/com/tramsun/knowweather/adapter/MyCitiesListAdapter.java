@@ -5,9 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.tramsun.knowweather.data.model.FirebaseWeather;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +36,7 @@ public class MyCitiesListAdapter extends RecyclerView.Adapter<CityViewHolder> {
         final FirebaseWeather city = data.get(position);
         holder.textView.setText(city.getName());
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onCityClicked(city);
-            }
-        });
+        holder.textView.setOnClickListener(v -> listener.onCityClicked(city));
     }
 
     @Override
